@@ -1,0 +1,9 @@
+---
+# tasks file for ansible-role-percona/
+
+- name: RedHat | Install Server Packages
+  yum: name='{{ item }}' state='{{ percona_mysql_version }}'
+  with_items: '{{ server_package_list }}'
+
+#- name: Configure MySQL Server
+#  template: src

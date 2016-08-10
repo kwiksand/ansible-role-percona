@@ -1,0 +1,7 @@
+---
+# handlers file for ansible-role-dellomsa/
+
+- name: Restart Percona
+  service:
+    name: mysql
+    state: restarted

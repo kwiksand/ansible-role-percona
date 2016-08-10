@@ -1,0 +1,20 @@
+---
+# tasks file for ansible-role-dellomsa/
+
+- name: Ensure Dell Server
+  set_fact: dell_server=true
+  when: ansible_system_vendor in [ 'Dell Inc.' ]
+
+- name: Install Dell Linux Repository
+  include: add-repo.yml
+  when: dell_server == true
+
+- name: Install Dell System Update
+  include: install-dell-system-update.yml
+  when: dell_server == true and install_dell_system_update
+
+- name: Install Dell OMSA Server Administration
+  include: install-srvadmin.yml
+  when: dell_server == true and install_dellomsa
+  tags: dellomsa
+
