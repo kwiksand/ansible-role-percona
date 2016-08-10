@@ -1,20 +1,8 @@
 ---
-# tasks file for ansible-role-dellomsa/
+# tasks file for ansible-role-percona/
 
-- name: Ensure Dell Server
-  set_fact: dell_server=true
-  when: ansible_system_vendor in [ 'Dell Inc.' ]
+- name: RedHat | Download Percona Yum Repository Release
+  yum: name="http://www.percona.com/downloads/percona-release/redhat/{{ percona_yum_release_version }}/percona-release-{{ percona_yum_release_version }}.noarch.rpm" state=present
 
-- name: Install Dell Linux Repository
-  include: add-repo.yml
-  when: dell_server == true
-
-- name: Install Dell System Update
-  include: install-dell-system-update.yml
-  when: dell_server == true and install_dell_system_update
-
-- name: Install Dell OMSA Server Administration
-  include: install-srvadmin.yml
-  when: dell_server == true and install_dellomsa
-  tags: dellomsa
-
+- name: Install / Configure Percona Server
+  include: install-percona-server.yml
